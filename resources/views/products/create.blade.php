@@ -20,7 +20,7 @@
                     <strong>Name:</strong>
                     <input type="text" name="name" class="form-control" placeholder="Name">
                 </div>
-                <div class="">
+                <div class="form-group">
                     <select class="select-category form-control" name="categories_id">
                         @foreach ($categories as $category)
                             <option value="{{ $category->id }}">{{ $category->name }}</option>
