@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Category;
 use App\Product;
 use Illuminate\Http\Request;
-use Yajra\DataTables\Facades\DataTables;
 
 class ProductController extends Controller
 {
@@ -14,15 +13,11 @@ class ProductController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request)
+    public function index()
     {
-        if ($request->ajax()) {
-            $products = Product::all();
+        $products = Product::latest()->paginate(5);
 
-            return DataTables::of($products);
-        }
-
-        return view('products.index');
+        return view('products.index', compact('products'))->with('i', (request()->input('page', 1) - 1) * 5);
     }
 
     /**
@@ -32,7 +27,8 @@ class ProductController extends Controller
      */
     public function create()
     {
-        //
+        $categories = Category::all();
+        return view('products.create', compact('categories'));
     }
 
     /**
@@ -43,7 +39,13 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'name' => 'required',
+            'categories_id' => 'required'
+        ]);
+
+        Product::create($request->all());
+        return redirect()->route('products.index')->with('success', 'Product created successfully');
     }
 
     /**
@@ -65,7 +67,8 @@ class ProductController extends Controller
      */
     public function edit(Product $product)
     {
-        //
+        $categories = Category::all();
+        return view('products.edit', compact('product','categories'));
     }
 
     /**
@@ -88,6 +91,7 @@ class ProductController extends Controller
      */
     public function destroy(Product $product)
     {
-        //
+        $product->delete();
+        return redirect()->route('products.index')->with('success', 'Product deleted sucessfully');
     }
 }
