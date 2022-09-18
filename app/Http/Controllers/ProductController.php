@@ -15,9 +15,10 @@ class ProductController extends Controller
      */
     public function index()
     {
-        $products = Product::latest()->paginate(5);
+        $categories = Category::all();
+        $products = Product::latest()->with('category')->paginate(5);
 
-        return view('products.index', compact('products'))->with('i', (request()->input('page', 1) - 1) * 5);
+        return view('products.index', compact('products', 'categories'))->with('i', (request()->input('page', 1) - 1) * 5);
     }
 
     /**
@@ -80,7 +81,14 @@ class ProductController extends Controller
      */
     public function update(Request $request, Product $product)
     {
-        //
+        $request->validate([
+            'name' => 'required',
+            'categories_id' => 'required'
+        ]);
+
+        $product->update($request->all());
+
+        return redirect()->route('products.index')->with('success', 'Product update successfully');
     }
 
     /**

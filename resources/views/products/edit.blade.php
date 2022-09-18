@@ -1,16 +1,6 @@
 @extends('categories.layout')
 
 @section('content')
-    <div class="row">
-        <div class="col-lg-12 margin-tb">
-            <div class="pull-left">
-                <h2>Edit Products</h2>
-            </div>
-            <div class="pull-right">
-                <a class="btn btn-primary" href="{{ route('products.index') }}"> Back</a>
-            </div>
-        </div>
-    </div>
 
     @if ($errors->any())
         <div class="alert alert-danger">
@@ -32,12 +22,14 @@
             <div class="col-xs-12 col-sm-12 col-md-12">
                 <div class="form-group">
                     <strong>Name:</strong>
-                    <input type="text" name="name" value="{{ $product->name }}" class="form-control"
-                        placeholder="Name">
+                    <input type="text" name="name" value="{{ $product->name }}" class="form-control" placeholder="Name">
                 </div>
                 <div class="form-group">
                     <select class="select-category form-control" name="categories_id">
-                        <option selected>{{ $product->categories_id }}</option>
+                        <option value="{{ $product->categories_id }}" selected>{{ $product->category->name }}</option>
+                        @foreach ($categories as $category)
+                            <option value="{{ $category->id }}">{{ $category->name }}</option>
+                        @endforeach
                     </select>
                 </div>
             </div>
@@ -47,3 +39,4 @@
             </div>
         </div>
     </form>
+@endsection

@@ -2,16 +2,7 @@
 @include('sweetalert::alert')
 
 @section('content')
-    <div class="row">
-        <div class="col-lg-12 margin-tb">
-            <div class="pull-left">
-                <h1>Test Laravel 6</h1>
-            </div>
-            <div class="pull-right">
-                <a class="btn btn-success" href="{{ route('categories.create') }}"> Create New category</a>
-            </div>
-        </div>
-    </div>
+    <a class="btn btn-success mb-4" href="{{ route('categories.create') }}" role="button">Add Category</a>
 
     <table id="myTable" class="display">
         <thead>
@@ -28,9 +19,7 @@
                     <td>{{ $category->name }}</td>
                     <td>
                         <form action="{{ route('categories.destroy', $category->id) }}" method="POST">
-
                             <a class="btn btn-primary" href="{{ route('categories.edit', $category->id) }}">Edit</a>
-
                             @csrf
                             @method('DELETE')
                             <button type="submit" class="btn btn-danger category_destroy">Delete</button>
