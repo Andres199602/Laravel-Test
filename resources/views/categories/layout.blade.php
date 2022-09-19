@@ -27,7 +27,7 @@
 
 <body>
 
-    <nav class="navbar navbar-expand-lg navbar-light bg-light mb-4">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <a class="navbar-brand" href="{{ route('welcome') }}">Test Laravel</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
             aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -60,11 +60,19 @@
         </div>
     </nav>
 
+
+    <div class="mb-4 pl-4">
+        @yield('breadcrumbs')
+    </div>
+
+
     <script>
         $(document).ready(function() {
             $('#myTable').DataTable();
         });
     </script>
+
+
 
     <div class="container">
         @yield('content')

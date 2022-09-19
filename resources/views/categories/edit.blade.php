@@ -1,5 +1,9 @@
 @extends('categories.layout')
 
+@section('breadcrumbs')
+{{ Breadcrumbs::render('categories.edit') }}
+@endsection
+
 @section('content')
 
     @if ($errors->any())
